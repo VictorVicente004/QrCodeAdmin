@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".EnviarEmail">
+
+
+    <TextView
+        android:id="@+id/txtEmail"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Enviar convite por E-mail:"
+        android:textSize="20sp"
+        android:background="@color/black"
+        android:textColor="@color/white"
+        />
+
+
+    <EditText
+        android:id="@+id/subject"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Assunto: "
+        android:layout_below="@id/txtEmail"/>
+    <EditText
+        android:id="@+id/content"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Conteúdo: "
+        android:layout_below="@id/subject"/>
+
+    <EditText
+        android:id="@+id/to_email"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Email do convidado:"
+        android:layout_below="@id/content"/>
+
+
+
+
+    <Button
+        android:id="@+id/btnEnviarConvite"
+        android:layout_width="150dp"
+        android:layout_height="45dp"
+        android:text="Enviar convite"
+        android:layout_below="@id/to_email"
+        android:layout_centerHorizontal="true"/>
+
+    <ImageView
+        android:id="@+id/ivQrcode"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:layout_margin="16dp"
+        android:scaleType="fitCenter"
+        android:layout_below="@+id/btnEnviarConvite"/>
+</RelativeLayout>
