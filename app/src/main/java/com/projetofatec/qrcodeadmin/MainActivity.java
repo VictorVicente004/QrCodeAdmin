@@ -28,7 +28,7 @@ public class MainActivity extends AppCompatActivity {
 
 
     private EditText nomeEvento, nomeParticipante, detalheEvento;
-    private Button  btnGerarCodigo;
+    private Button  btnGerarCodigo, btnScanner;
     private ImageView ivQrcode;
 
 
@@ -47,7 +47,7 @@ public class MainActivity extends AppCompatActivity {
         detalheEvento = findViewById(R.id.detalheEvento);
         btnGerarCodigo = findViewById(R.id.btnGerarCodigo);
         ivQrcode = findViewById(R.id.ivQrcode);
-
+        btnScanner = findViewById(R.id.btnScanner);
 
         //função para gerar QRCODE
 

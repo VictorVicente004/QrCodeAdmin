@@ -63,6 +63,15 @@
         android:contentDescription="QR Code"/>
 
 
+    <Button
+        android:id="@+id/btnScanner"
+        android:layout_width="150dp"
+        android:layout_height="45dp"
+        android:text="Escanear convite"
+        android:layout_below="@id/ivQrcode"
+        android:layout_centerHorizontal="true"/>
+
+
 
 </RelativeLayout>
 
