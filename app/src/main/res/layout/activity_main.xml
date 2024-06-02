@@ -45,12 +45,29 @@
     android:hint="Detalhes do Evento:"
     android:layout_below="@id/nomeParticipante"/>
 
+    <EditText
+        android:id="@+id/dataEvento"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Data: "
+        android:layout_below="@id/detalheEvento"
+        android:inputType="date"/>
+
+
+    <EditText
+        android:id="@+id/localEvento"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Local: "
+        android:layout_below="@id/dataEvento"
+        />
+
     <Button
         android:id="@+id/btnGerarCodigo"
         android:layout_width="150dp"
         android:layout_height="45dp"
-        android:text="Gerar QrCode"
-        android:layout_below="@id/detalheEvento"
+        android:text="Gerar convite"
+        android:layout_below="@id/localEvento"
         android:layout_centerHorizontal="true"/>
 
     <ImageView
@@ -67,7 +84,7 @@
         android:id="@+id/btnScanner"
         android:layout_width="150dp"
         android:layout_height="45dp"
-        android:text="Escanear convite"
+        android:text="Escanear"
         android:layout_below="@id/ivQrcode"
         android:layout_centerHorizontal="true"/>
 

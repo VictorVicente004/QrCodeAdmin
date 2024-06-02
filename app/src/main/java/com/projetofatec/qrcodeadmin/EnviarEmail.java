@@ -22,9 +22,10 @@ import androidx.core.view.WindowInsetsCompat;
 public class EnviarEmail extends AppCompatActivity {
 
     private EditText edtAssunto, edtConteudo, edtEmail;
-    private Button btnEnviarConvite;
+    private Button btnEnviarConvite, btnMenu;
     private Bitmap qrCodeBitmap;
     private ImageView ivQrcode;
+    private  String qrContent;
 
 
 
@@ -39,11 +40,23 @@ public class EnviarEmail extends AppCompatActivity {
         edtEmail = findViewById(R.id.to_email);
         btnEnviarConvite = findViewById(R.id.btnEnviarConvite);
         ivQrcode = findViewById(R.id.ivQrcode);
+        btnMenu = findViewById(R.id.btnMenu);
+
+
+        // Retornar ao início do programa
+        btnMenu.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(EnviarEmail.this, MainActivity.class);
+                startActivity(intent);
+            }
+        });
 
 
         // Recebe o QR Code codificado em Base64 e os dados do evento
         Intent intent = getIntent();
         String encodedBitmap = intent.getStringExtra("qrCodeBitmap");
+        qrContent = intent.getStringExtra("qrContent");
         if (encodedBitmap != null) {
             byte[] decodedString = Base64.decode(encodedBitmap, Base64.DEFAULT);
             qrCodeBitmap = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
@@ -87,4 +100,7 @@ public class EnviarEmail extends AppCompatActivity {
             Toast.makeText(this, "Não há clientes de e-mail instalados.", Toast.LENGTH_SHORT).show();
         }
     }
+
+
+
 }

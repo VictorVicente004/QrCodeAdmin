@@ -5,7 +5,8 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".EnviarEmail">
+    tools:context=".EnviarEmail"
+    android:padding="20dp">
 
 
     <TextView
@@ -57,4 +58,13 @@
         android:layout_margin="16dp"
         android:scaleType="fitCenter"
         android:layout_below="@+id/btnEnviarConvite"/>
+
+
+    <Button
+        android:id="@+id/btnMenu"
+        android:layout_width="150dp"
+        android:layout_height="45dp"
+        android:text="Menu principal"
+        android:layout_below="@id/ivQrcode"
+        android:layout_centerHorizontal="true"/>
 </RelativeLayout>

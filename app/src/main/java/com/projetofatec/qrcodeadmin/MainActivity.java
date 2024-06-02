@@ -27,7 +27,7 @@ import javax.security.auth.Subject;
 public class MainActivity extends AppCompatActivity {
 
 
-    private EditText nomeEvento, nomeParticipante, detalheEvento;
+    private EditText nomeEvento, nomeParticipante, detalheEvento, dataEvento, localEvento;
     private Button  btnGerarCodigo, btnScanner;
     private ImageView ivQrcode;
 
@@ -48,6 +48,8 @@ public class MainActivity extends AppCompatActivity {
         btnGerarCodigo = findViewById(R.id.btnGerarCodigo);
         ivQrcode = findViewById(R.id.ivQrcode);
         btnScanner = findViewById(R.id.btnScanner);
+        dataEvento = findViewById(R.id.dataEvento);
+        localEvento = findViewById(R.id.localEvento);
 
         //função para gerar QRCODE
 
@@ -59,19 +61,31 @@ public class MainActivity extends AppCompatActivity {
 
     private void gerarQR() {
 
-        String text = nomeEvento.getText().toString().trim();
-        if (text.isEmpty()) {
+        //Criando varíaveis para os edittexts
+        String evento = nomeEvento.getText().toString().trim();
+        String participante = nomeParticipante.getText().toString().trim();
+        String detalhes = detalheEvento.getText().toString().trim();
+        String data = dataEvento.getText().toString().trim();
+        String local = localEvento.getText().toString().trim();
+
+
+        if (evento.isEmpty()) {
             Log.d("MainActivity", "Texto do evento está vazio");
             return;
         }
 
+        String qrContent = "Evento: " + evento + "\n" +
+                "Participante: " + participante + "\n" +
+                "Detalhes: " + detalhes + "\n" +
+                "Data: " + data + "\n" +
+                "Local: " + local;
+
         MultiFormatWriter writer = new MultiFormatWriter();
         try {
-            BitMatrix matrix = writer.encode(text, BarcodeFormat.QR_CODE, 400,400);
+            BitMatrix matrix = writer.encode(qrContent, BarcodeFormat.QR_CODE, 400,400);
             BarcodeEncoder encoder = new BarcodeEncoder();
             Bitmap bitmap = encoder.createBitmap(matrix);
             ivQrcode.setImageBitmap(bitmap);
-
 
 
             // Converter Bitmap para Base64 string
@@ -84,6 +98,7 @@ public class MainActivity extends AppCompatActivity {
             // Iniciar a nova Activity e passar o bitmap codificado
             Intent intent = new Intent(MainActivity.this, EnviarEmail.class);
             intent.putExtra("qrCodeBitmap", encoded);
+            intent.putExtra("qrContent", qrContent);
             startActivity(intent);
 
 
