@@ -4,8 +4,9 @@
 
     <uses-permission android:name="android.permission.CAMERA" />
 
-    <uses-feature android:name="android.hardware.camera" /> <!-- Permissão para acessar a internet -->
-    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-feature android:name="android.hardware.camera" />
+
+    <uses-permission android:name="android.permission.INTERNET" /> <!-- Permissão para acessar a internet -->
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" /> <!-- Permissão para escrever no armazenamento externo -->
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
@@ -19,27 +20,33 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.QrCodeAdmin"
         tools:targetApi="31">
+
+
+        <activity
+            android:name=".activities.Login_e_Registro"
+            android:exported="true">
+        <intent-filter>
+            <action android:name="android.intent.action.MAIN" />
+            <category android:name="android.intent.category.LAUNCHER" />
+        </intent-filter>
+    </activity>
+
+
+
         <activity
             android:name=".Dados"
             android:exported="false" />
         <activity
-            android:name=".CustomCaptureActivity"
-            android:screenOrientation="portrait"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
-        <activity
             android:name=".ScannerActivity"
-            android:exported="false" />
+            android:exported="false"
+        />
         <activity
             android:name=".EnviarEmail"
             android:exported="false" />
+
         <activity
             android:name=".MainActivity"
-            android:exported="true">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
+            android:exported="false">
         </activity>
     </application>
 

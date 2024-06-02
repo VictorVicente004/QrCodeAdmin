@@ -30,11 +30,10 @@ public class ScannerActivity extends AppCompatActivity {
         setContentView(R.layout.activity_scanner);
 
 
-        new IntentIntegrator(this)
-                .setCaptureActivity(CustomCaptureActivity.class) // Use a CustomCaptureActivity
-                .setDesiredBarcodeFormats(IntentIntegrator.QR_CODE)
+        new IntentIntegrator(this).setDesiredBarcodeFormats(IntentIntegrator.QR_CODE)
                 .setPrompt("Escanear um QRCode")
                 .setCameraId(0) // Use a câmera traseira
+                .setOrientationLocked(false) // Desbloqueie a orientação
                 .setBeepEnabled(true)
                 .setBarcodeImageEnabled(true)
                 .initiateScan();
@@ -51,8 +50,8 @@ public class ScannerActivity extends AppCompatActivity {
                 Toast.makeText(this, "Scan cancelled", Toast.LENGTH_LONG).show();
             } else {
                 String scannedContent = result.getContents();
-                Toast.makeText(this, "Scanned: " + scannedContent, Toast.LENGTH_LONG).show();
                 // Processar o conteúdo do QR Code aqui
+
                 // Por exemplo, iniciar uma nova Activity e passar os dados lidos
                 Intent intent = new Intent(ScannerActivity.this, Dados.class);
                 intent.putExtra("scannedData", scannedContent);

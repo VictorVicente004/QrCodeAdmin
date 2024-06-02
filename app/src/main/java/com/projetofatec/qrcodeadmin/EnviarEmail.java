@@ -19,14 +19,21 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
+import com.google.zxing.BarcodeFormat;
+import com.google.zxing.MultiFormatWriter;
+import com.google.zxing.WriterException;
+import com.google.zxing.common.BitMatrix;
+import com.journeyapps.barcodescanner.BarcodeEncoder;
+
+import java.io.ByteArrayOutputStream;
+
 public class EnviarEmail extends AppCompatActivity {
 
     private EditText edtAssunto, edtConteudo, edtEmail;
     private Button btnEnviarConvite, btnMenu;
     private Bitmap qrCodeBitmap;
     private ImageView ivQrcode;
-    private  String qrContent;
-
+    private String qrContent;
 
 
     @Override
@@ -39,8 +46,9 @@ public class EnviarEmail extends AppCompatActivity {
         edtConteudo = findViewById(R.id.content);
         edtEmail = findViewById(R.id.to_email);
         btnEnviarConvite = findViewById(R.id.btnEnviarConvite);
-        ivQrcode = findViewById(R.id.ivQrcode);
         btnMenu = findViewById(R.id.btnMenu);
+        ivQrcode = findViewById(R.id.ivQrcode);
+
 
 
         // Retornar ao início do programa
@@ -52,16 +60,20 @@ public class EnviarEmail extends AppCompatActivity {
             }
         });
 
+        // -------------------------------------------------------------------------------------------------//
 
-        // Recebe o QR Code codificado em Base64 e os dados do evento
+
+
+
+        // Receber os dados da MainActivity
         Intent intent = getIntent();
-        String encodedBitmap = intent.getStringExtra("qrCodeBitmap");
-        qrContent = intent.getStringExtra("qrContent");
-        if (encodedBitmap != null) {
-            byte[] decodedString = Base64.decode(encodedBitmap, Base64.DEFAULT);
-            qrCodeBitmap = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
-            ivQrcode.setImageBitmap(qrCodeBitmap);
+        if (intent != null && intent.hasExtra("dadosEvento")) {
+            String dadosEvento = intent.getStringExtra("dadosEvento");
+            gerarQR(dadosEvento);
         }
+
+        // -------------------------------------------------------------------------------------------------//
+
 
         // OnClick de enviar email
         btnEnviarConvite.setOnClickListener(new View.OnClickListener() {
@@ -78,28 +90,80 @@ public class EnviarEmail extends AppCompatActivity {
                 }
             }
         });
+
+        // -------------------------------------------------------------------------------------------------//
+
+    }
+    private void gerarQR(String dadosEvento) {
+        // Criar QR Code com base nos dados do evento
+        qrContent = dadosEvento;
+
+        // Converter o conteúdo do QR Code em um bitmap
+        MultiFormatWriter multiFormatWriter = new MultiFormatWriter();
+        try {
+            BitMatrix bitMatrix = multiFormatWriter.encode(qrContent, BarcodeFormat.QR_CODE, 400, 400);
+            BarcodeEncoder barcodeEncoder = new BarcodeEncoder();
+            qrCodeBitmap = barcodeEncoder.createBitmap(bitMatrix);
+
+            // Exibir o QR Code na ImageView
+            ivQrcode.setImageBitmap(qrCodeBitmap);
+        } catch (WriterException e) {
+            e.printStackTrace();
+            Toast.makeText(this, "Erro ao gerar o QR Code", Toast.LENGTH_SHORT).show();
+        }
     }
 
-    // função para enviar o email
+    // -------------------------------------------------------------------------------------------------//
+
+
+    // Função para enviar o email
     public void enviarEmail(String subject, String content, String toEmail) {
+        if (qrCodeBitmap == null) {
+            Toast.makeText(this, "QR Code não gerado", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        // Criar um Intent para enviar e-mail
         Intent emailIntent = new Intent(Intent.ACTION_SEND);
-        emailIntent.setType("application/octet-stream");
+        emailIntent.setType("image/jpeg");
         emailIntent.putExtra(Intent.EXTRA_EMAIL, new String[]{toEmail});
         emailIntent.putExtra(Intent.EXTRA_SUBJECT, subject);
         emailIntent.putExtra(Intent.EXTRA_TEXT, content);
 
-        // Converter o Bitmap para URI
-        String path = MediaStore.Images.Media.insertImage(getContentResolver(), qrCodeBitmap, "QRCode", null);
-        Uri qrCodeUri = Uri.parse(path);
 
-        emailIntent.putExtra(Intent.EXTRA_STREAM, qrCodeUri);
-
+        // Converter o bitmap do QR Code em um URI e adicionar como anexo
         try {
-            startActivity(Intent.createChooser(emailIntent, "Escolha o E-mail:"));
-        } catch (android.content.ActivityNotFoundException ex) {
-            Toast.makeText(this, "Não há clientes de e-mail instalados.", Toast.LENGTH_SHORT).show();
+            ByteArrayOutputStream bytes = new ByteArrayOutputStream();
+            qrCodeBitmap.compress(Bitmap.CompressFormat.JPEG, 100, bytes);
+            String path = MediaStore.Images.Media.insertImage(getContentResolver(), qrCodeBitmap, "QRCode", null);
+            Uri qrCodeUri = Uri.parse(path);
+            emailIntent.putExtra(Intent.EXTRA_STREAM, qrCodeUri);
+
+            // Iniciar a atividade de compartilhamento de e-mail
+            startActivity(Intent.createChooser(emailIntent, "Escolha o aplicativo de e-mail:"));
+        } catch (Exception e) {
+            e.printStackTrace();
+            Toast.makeText(this, "Erro ao anexar o QR Code ao e-mail", Toast.LENGTH_SHORT).show();
         }
     }
-
-
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

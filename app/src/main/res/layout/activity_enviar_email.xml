@@ -43,13 +43,7 @@
 
 
 
-    <Button
-        android:id="@+id/btnEnviarConvite"
-        android:layout_width="150dp"
-        android:layout_height="45dp"
-        android:text="Enviar convite"
-        android:layout_below="@id/to_email"
-        android:layout_centerHorizontal="true"/>
+
 
     <ImageView
         android:id="@+id/ivQrcode"
@@ -57,7 +51,15 @@
         android:layout_height="200dp"
         android:layout_margin="16dp"
         android:scaleType="fitCenter"
-        android:layout_below="@+id/btnEnviarConvite"/>
+        android:layout_below="@+id/to_email"/>
+
+    <Button
+        android:id="@+id/btnEnviarConvite"
+        android:layout_width="150dp"
+        android:layout_height="45dp"
+        android:text="Enviar convite"
+        android:layout_below="@id/ivQrcode"
+        android:layout_centerHorizontal="true"/>
 
 
     <Button
@@ -65,6 +67,6 @@
         android:layout_width="150dp"
         android:layout_height="45dp"
         android:text="Menu principal"
-        android:layout_below="@id/ivQrcode"
+        android:layout_below="@id/btnEnviarConvite"
         android:layout_centerHorizontal="true"/>
 </RelativeLayout>

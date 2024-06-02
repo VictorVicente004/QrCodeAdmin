@@ -63,29 +63,20 @@
         />
 
     <Button
-        android:id="@+id/btnGerarCodigo"
-        android:layout_width="150dp"
+        android:id="@+id/btnEnviar"
+        android:layout_width="200dp"
         android:layout_height="45dp"
-        android:text="Gerar convite"
+        android:text="Enviar Convite"
         android:layout_below="@id/localEvento"
         android:layout_centerHorizontal="true"/>
-
-    <ImageView
-        android:id="@+id/ivQrcode"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/btnGerarCodigo"
-        android:layout_marginTop="16dp"
-        android:scaleType="fitCenter"
-        android:contentDescription="QR Code"/>
 
 
     <Button
         android:id="@+id/btnScanner"
-        android:layout_width="150dp"
+        android:layout_width="200dp"
         android:layout_height="45dp"
-        android:text="Escanear"
-        android:layout_below="@id/ivQrcode"
+        android:text="Escanear Convite"
+        android:layout_below="@id/btnEnviar"
         android:layout_centerHorizontal="true"/>
 
 

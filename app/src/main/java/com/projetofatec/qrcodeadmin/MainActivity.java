@@ -29,8 +29,8 @@ public class MainActivity extends AppCompatActivity {
 
 
     private EditText nomeEvento, nomeParticipante, detalheEvento, dataEvento, localEvento;
-    private Button  btnGerarCodigo, btnScanner;
-    private ImageView ivQrcode;
+    private Button  btnEnviar, btnScanner;
+
 
 
 
@@ -46,16 +46,15 @@ public class MainActivity extends AppCompatActivity {
         nomeEvento = findViewById(R.id.nomeEvento);
         nomeParticipante = findViewById(R.id.nomeParticipante);
         detalheEvento = findViewById(R.id.detalheEvento);
-        btnGerarCodigo = findViewById(R.id.btnGerarCodigo);
-        ivQrcode = findViewById(R.id.ivQrcode);
+        btnEnviar = findViewById(R.id.btnEnviar);
         btnScanner = findViewById(R.id.btnScanner);
         dataEvento = findViewById(R.id.dataEvento);
         localEvento = findViewById(R.id.localEvento);
 
 
 
-        //função para escanear qrcode
 
+        //função para escanear qrcode
         btnScanner.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -64,67 +63,21 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        //função para enviar convite
+        btnEnviar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Concatenar os dados do evento em uma única string
+                String dadosEvento = "Nome do Evento: " + nomeEvento.getText().toString() + "\n" +
+                        "Nome do Participante: " + nomeParticipante.getText().toString() + "\n" +
+                        "Detalhes: " + detalheEvento.getText().toString() + "\n" +
+                        "Data: " + dataEvento.getText().toString() + "\n" +
+                        "Local: " + localEvento.getText().toString();
 
-
-
-
-        //função para gerar QRCODE
-        btnGerarCodigo.setOnClickListener(v->{
-             gerarQR();
-
+                Intent intent = new Intent(MainActivity.this, EnviarEmail.class);
+                intent.putExtra("dadosEvento", dadosEvento);
+                startActivity(intent);
+            }
         });
-    }
-
-    private void gerarQR() {
-
-        //Criando varíaveis para os edittexts
-        String evento = nomeEvento.getText().toString().trim();
-        String participante = nomeParticipante.getText().toString().trim();
-        String detalhes = detalheEvento.getText().toString().trim();
-        String data = dataEvento.getText().toString().trim();
-        String local = localEvento.getText().toString().trim();
-
-
-        if (evento.isEmpty()) {
-            Log.d("MainActivity", "Texto do evento está vazio");
-            return;
-        }
-
-        String qrContent = "Evento: " + evento + "\n" +
-                "Participante: " + participante + "\n" +
-                "Detalhes: " + detalhes + "\n" +
-                "Data: " + data + "\n" +
-                "Local: " + local;
-
-        MultiFormatWriter writer = new MultiFormatWriter();
-        try {
-            BitMatrix matrix = writer.encode(qrContent, BarcodeFormat.QR_CODE, 400,400);
-            BarcodeEncoder encoder = new BarcodeEncoder();
-            Bitmap bitmap = encoder.createBitmap(matrix);
-            ivQrcode.setImageBitmap(bitmap);
-
-
-            // Converter Bitmap para Base64 string
-            ByteArrayOutputStream baos = new ByteArrayOutputStream();
-            bitmap.compress(Bitmap.CompressFormat.PNG, 100, baos);
-            byte[] byteArray = baos.toByteArray();
-            String encoded = Base64.encodeToString(byteArray, Base64.DEFAULT);
-
-
-            // Iniciar a nova Activity e passar o bitmap codificado
-            Intent intent = new Intent(MainActivity.this, EnviarEmail.class);
-            intent.putExtra("qrCodeBitmap", encoded);
-            intent.putExtra("qrContent", qrContent);
-            startActivity(intent);
-
-
-            Toast.makeText(this, "QRCode Gerado com sucesso :)", Toast.LENGTH_SHORT).show();
-            Log.d("MainActivity", "QR Code gerado com sucesso");
-
-        } catch (WriterException e) {
-            Log.e("MainActivity", "Erro ao gerar QR Code", e);
-        }
-
-
     }
 }
