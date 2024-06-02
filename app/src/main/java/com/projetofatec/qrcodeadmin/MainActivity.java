@@ -18,6 +18,7 @@ import com.google.zxing.BarcodeFormat;
 import com.google.zxing.MultiFormatWriter;
 import com.google.zxing.WriterException;
 import com.google.zxing.common.BitMatrix;
+import com.google.zxing.integration.android.IntentIntegrator;
 import com.journeyapps.barcodescanner.BarcodeEncoder;
 
 import java.io.ByteArrayOutputStream;
@@ -51,8 +52,23 @@ public class MainActivity extends AppCompatActivity {
         dataEvento = findViewById(R.id.dataEvento);
         localEvento = findViewById(R.id.localEvento);
 
-        //função para gerar QRCODE
 
+
+        //função para escanear qrcode
+
+        btnScanner.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this, ScannerActivity.class);
+                startActivity(intent);
+            }
+        });
+
+
+
+
+
+        //função para gerar QRCODE
         btnGerarCodigo.setOnClickListener(v->{
              gerarQR();
 
