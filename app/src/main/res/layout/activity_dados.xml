@@ -5,14 +5,17 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Dados">
+    tools:context=".Dados"
+    android:gravity="center"
+    >
 
     <TextView
         android:id="@+id/txtDados"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_width="300dp"
+        android:layout_height="300dp"
         android:text=""
         android:textAlignment="center"
-
+        android:textSize="18sp"
+        android:background="@drawable/contorno"
         />
 </RelativeLayout>

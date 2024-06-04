@@ -1,3 +1,9 @@
 <resources>
     <string name="app_name">QrCodeAdmin</string>
+    <string name="login">Login</string>
+    <string name="email">Email</string>
+    <string name="senha">Senha</string>
+    <string name="registro">Registro</string>
+    <string name="voltar">Voltar</string>
+    <string name="registrar">Registrar</string>
 </resources>

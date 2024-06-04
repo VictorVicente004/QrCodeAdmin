@@ -1,85 +1,111 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity"
-    android:padding="10dp">
-
-    <Space
-        android:id="@+id/spacer"
-        android:layout_width="match_parent"
-        android:layout_height="30dp"/>
-<TextView
-    android:id="@+id/txtInicio"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:text="APP Administrador"
-    android:textSize="34dp"
-    android:textColor="@color/white"
-    android:background="@color/black"
-    android:textAlignment="center"
-    android:layout_below="@+id/spacer"/>
+    android:gravity="center|top"
+    android:orientation="vertical"
+    tools:context=".MainActivity">
 
 
-<EditText
-    android:id="@+id/nomeEvento"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:hint="Nome do Evento:"
-    android:layout_below="@id/txtInicio"/>
 
-    <EditText
-        android:id="@+id/nomeParticipante"
+
+
+
+
+    <TextView
+        android:id="@+id/txtInicio"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Nome do convidado:"
-        android:layout_below="@+id/nomeEvento"/>
+        android:text="Convites"
+        android:textAlignment="center"
+        android:textColor="@color/black"
+        android:textSize="34dp" />
 
-<EditText
-    android:id="@+id/detalheEvento"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:hint="Detalhes do Evento:"
-    android:layout_below="@id/nomeParticipante"/>
 
-    <EditText
-        android:id="@+id/dataEvento"
+    <com.google.android.material.textfield.TextInputLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Data: "
-        android:layout_below="@id/detalheEvento"
-        android:inputType="date"/>
+        android:layout_marginStart="25dp"
+        android:layout_marginEnd="25dp"
+        android:layout_marginTop="75dp">
 
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/nomeEvento"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Nome do Evento:" />
+    </com.google.android.material.textfield.TextInputLayout>
 
-    <EditText
-        android:id="@+id/localEvento"
+    <com.google.android.material.textfield.TextInputLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Local: "
-        android:layout_below="@id/dataEvento"
-        />
+        android:layout_marginStart="25dp"
+        android:layout_marginEnd="25dp">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/nomeParticipante"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Nome do convidado:" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="25dp"
+        android:layout_marginEnd="25dp">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/detalheEvento"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Detalhes do Evento:" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="25dp"
+        android:layout_marginEnd="25dp">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/dataEvento"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:clickable="true"
+            android:focusable="false"
+            android:hint="Defina a data:" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="25dp"
+        android:layout_marginEnd="25dp">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/localEvento"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Local: " />
+    </com.google.android.material.textfield.TextInputLayout>
 
     <Button
+        style="@style/Widget.Material3.Button.OutlinedButton.Icon"
         android:id="@+id/btnEnviar"
         android:layout_width="200dp"
         android:layout_height="45dp"
-        android:text="Enviar Convite"
+        android:layout_marginTop="75dp"
+        android:text="Enviar"
+        android:textStyle="bold"
         android:layout_below="@id/localEvento"
-        android:layout_centerHorizontal="true"/>
-
-
-    <Button
-        android:id="@+id/btnScanner"
-        android:layout_width="200dp"
-        android:layout_height="45dp"
-        android:text="Escanear Convite"
-        android:layout_below="@id/btnEnviar"
-        android:layout_centerHorizontal="true"/>
+        android:layout_centerHorizontal="true"
+        app:cornerRadius="8dp"
+        app:icon="@android:drawable/ic_menu_send"/>
 
 
 
-</RelativeLayout>
-
+</LinearLayout>

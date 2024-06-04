@@ -56,6 +56,7 @@ public class ScannerActivity extends AppCompatActivity {
                 Intent intent = new Intent(ScannerActivity.this, Dados.class);
                 intent.putExtra("scannedData", scannedContent);
                 startActivity(intent);
+                finish();
             }
         } else {
             super.onActivityResult(requestCode, resultCode, data);

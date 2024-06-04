@@ -55,7 +55,7 @@ public class EnviarEmail extends AppCompatActivity {
         btnMenu.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(EnviarEmail.this, MainActivity.class);
+                Intent intent = new Intent(EnviarEmail.this, Menu.class);
                 startActivity(intent);
             }
         });
@@ -101,7 +101,7 @@ public class EnviarEmail extends AppCompatActivity {
         // Converter o conteúdo do QR Code em um bitmap
         MultiFormatWriter multiFormatWriter = new MultiFormatWriter();
         try {
-            BitMatrix bitMatrix = multiFormatWriter.encode(qrContent, BarcodeFormat.QR_CODE, 400, 400);
+            BitMatrix bitMatrix = multiFormatWriter.encode(qrContent, BarcodeFormat.QR_CODE, 300, 300);
             BarcodeEncoder barcodeEncoder = new BarcodeEncoder();
             qrCodeBitmap = barcodeEncoder.createBitmap(bitMatrix);
 

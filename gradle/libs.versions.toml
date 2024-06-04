@@ -10,6 +10,7 @@ constraintlayout = "2.1.4"
 zxing_embedded = "4.3.0"
 zxing_core = "3.4.1"
 firebaseAuth = "23.0.0"
+firebaseDatabase = "21.0.0"
 
 [libraries]
 junit = { group = "junit", name = "junit", version.ref = "junit" }
@@ -22,6 +23,7 @@ constraintlayout = { group = "androidx.constraintlayout", name = "constraintlayo
 zxing_embedded = { group = "com.journeyapps", name = "zxing-android-embedded", version.ref = "zxing_embedded" }
 zxing_core = { group = "com.google.zxing", name = "core", version.ref = "zxing_core" }
 firebase-auth = { group = "com.google.firebase", name = "firebase-auth", version.ref = "firebaseAuth" }
+firebase-database = { group = "com.google.firebase", name = "firebase-database", version.ref = "firebaseDatabase" }
 
 [plugins]
 androidApplication = { id = "com.android.application", version.ref = "agp" }

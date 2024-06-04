@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Menu">
+
+
+    <androidx.constraintlayout.widget.Group
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:constraint_referenced_ids="frameCriarEvento,frameEscanear" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center|bottom"
+        >
+
+
+        <FrameLayout
+            android:id="@+id/frameCriarEvento"
+            android:layout_width="90dp"
+            android:layout_height="90dp"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="75dp"
+            android:background="@drawable/contorno"
+            android:foreground="?attr/selectableItemBackgroundBorderless"
+            android:layout_marginEnd="20dp"
+            >
+
+            <ImageView
+                android:id="@+id/imgPlus"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:layout_gravity="top|start"
+                android:layout_margin="8dp"
+                android:src="@android:drawable/ic_input_add"
+                app:tint="@color/black" />
+
+            <TextView
+                android:id="@+id/txtPlus"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom|center_horizontal"
+                android:layout_marginBottom="16dp"
+                android:text="Criar evento"
+                android:textAlignment="center"
+                android:textColor="@android:color/black" />
+        </FrameLayout>
+        <FrameLayout
+            android:id="@+id/frameEscanear"
+            android:layout_width="90dp"
+            android:layout_height="90dp"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="75dp"
+            android:background="@drawable/contorno"
+            android:foreground="?attr/selectableItemBackgroundBorderless">
+
+            <ImageView
+                android:id="@+id/icon"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:layout_gravity="top|start"
+                android:layout_margin="8dp"
+                android:src="@drawable/qr_code_scanner"
+                />
+
+            <TextView
+                android:id="@+id/text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom|center_horizontal"
+                android:layout_marginBottom="16dp"
+                android:text="Escanear"
+                android:textAlignment="center"
+                android:textColor="@android:color/black" />
+        </FrameLayout>
+
+    </LinearLayout>
+
+</RelativeLayout>

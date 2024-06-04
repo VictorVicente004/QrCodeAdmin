@@ -1,35 +1,25 @@
 package com.projetofatec.qrcodeadmin;
 
+import android.app.DatePickerDialog;
 import android.content.Intent;
-import android.graphics.Bitmap;
 import android.os.Bundle;
-import android.util.Base64;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.EditText;
-import android.widget.ImageView;
-import android.widget.Toast;
 
-import androidx.activity.EdgeToEdge;
+import com.projetofatec.qrcodeadmin.dao.EventoDAO;
+import com.projetofatec.qrcodeadmin.model.Evento;
+
 import androidx.appcompat.app.AppCompatActivity;
+import java.util.Calendar;
 
-import com.google.zxing.BarcodeFormat;
-import com.google.zxing.MultiFormatWriter;
-import com.google.zxing.WriterException;
-import com.google.zxing.common.BitMatrix;
-import com.google.zxing.integration.android.IntentIntegrator;
-import com.journeyapps.barcodescanner.BarcodeEncoder;
-
-import java.io.ByteArrayOutputStream;
-
-import javax.security.auth.Subject;
 
 public class MainActivity extends AppCompatActivity {
 
 
     private EditText nomeEvento, nomeParticipante, detalheEvento, dataEvento, localEvento;
-    private Button  btnEnviar, btnScanner;
+    private Button  btnEnviar;
 
 
 
@@ -37,7 +27,6 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        EdgeToEdge.enable(this);
         setContentView(R.layout.activity_main);
 
 
@@ -47,37 +36,64 @@ public class MainActivity extends AppCompatActivity {
         nomeParticipante = findViewById(R.id.nomeParticipante);
         detalheEvento = findViewById(R.id.detalheEvento);
         btnEnviar = findViewById(R.id.btnEnviar);
-        btnScanner = findViewById(R.id.btnScanner);
         dataEvento = findViewById(R.id.dataEvento);
         localEvento = findViewById(R.id.localEvento);
 
-
-
-
-        //função para escanear qrcode
-        btnScanner.setOnClickListener(new View.OnClickListener() {
+        // Configurar DatePickerDialog
+        dataEvento.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this, ScannerActivity.class);
-                startActivity(intent);
+                Calendar calendar = Calendar.getInstance();
+                int year = calendar.get(Calendar.YEAR);
+                int month = calendar.get(Calendar.MONTH);
+                int day = calendar.get(Calendar.DAY_OF_MONTH);
+
+                DatePickerDialog datePickerDialog = new DatePickerDialog(MainActivity.this, new DatePickerDialog.OnDateSetListener() {
+                    @Override
+                    public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+                        // Note que o mês começa do zero
+                        String selectedDate = String.format("%02d/%02d/%02d", dayOfMonth, month + 1, year % 100);
+                        dataEvento.setText(selectedDate);
+                    }
+                }, year, month, day);
+                datePickerDialog.show();
             }
         });
 
-        //função para enviar convite
-        btnEnviar.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // Concatenar os dados do evento em uma única string
-                String dadosEvento = "Nome do Evento: " + nomeEvento.getText().toString() + "\n" +
-                        "Nome do Participante: " + nomeParticipante.getText().toString() + "\n" +
-                        "Detalhes: " + detalheEvento.getText().toString() + "\n" +
-                        "Data: " + dataEvento.getText().toString() + "\n" +
-                        "Local: " + localEvento.getText().toString();
+        // Criar instancia do objeto Evento Dao
+        EventoDAO eventoDAO = new EventoDAO();
 
-                Intent intent = new Intent(MainActivity.this, EnviarEmail.class);
-                intent.putExtra("dadosEvento", dadosEvento);
-                startActivity(intent);
-            }
+
+        // Defina um OnClickListener para o Button
+        btnEnviar.setOnClickListener(v -> {
+            // Obtenha os dados preenchidos nos EditTexts
+            String nomeEventoStr = nomeEvento.getText().toString();
+            String nomeParticipanteStr = nomeParticipante.getText().toString();
+            String detalhesEventoStr = detalheEvento.getText().toString();
+            String dataEventoStr = dataEvento.getText().toString();
+            String localEventoStr = localEvento.getText().toString();
+
+            // Crie um objeto Evento com os dados preenchidos
+            Evento evento = new Evento(nomeEventoStr, nomeParticipanteStr, detalhesEventoStr, dataEventoStr, localEventoStr);
+
+            // Adicione o evento ao banco de dados
+            eventoDAO.adicionarEvento(evento);
+
+
+
+            // enviar convite
+            // Concatenar os dados do evento em uma única string
+            String dadosEvento = "Nome do Evento: " + nomeEventoStr + "\n" +
+                    "Nome do Participante: " + nomeParticipanteStr + "\n" +
+                    "Detalhes: " + detalhesEventoStr + "\n" +
+                    "Data: " + dataEventoStr + "\n" +
+                    "Local: " + localEventoStr;
+
+            // Criar um Intent para a atividade de envio de e-mail
+            Intent intent = new Intent(MainActivity.this, EnviarEmail.class);
+            intent.putExtra("dadosEvento", dadosEvento);
+            startActivity(intent);
         });
+
     }
 }
